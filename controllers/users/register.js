@@ -1,8 +1,8 @@
-const { User } = require("../../models/users");
+const { User } = require("../../models");
 
 const bcrypt = require("bcrypt");
 
-const { ctrlWrapper, HttpError } = require("../helpers");
+const { ctrlWrapper, HttpError } = require("../../helpers");
 
 const register = async (req, res) => {
   const { password, email } = req.body;
@@ -18,8 +18,10 @@ const register = async (req, res) => {
   const newUser = await User.create({ ...req.body, password: hashPassword });
 
   res.status(201).json({
-    email: newUser.email,
-    subscription: newUser.subscription,
+    user: {
+      email: newUser.email,
+      subscription: newUser.subscription,
+    },
   });
 };
 

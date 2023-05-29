@@ -19,4 +19,11 @@ router.get("/current", authenticate, ctrlAuth.getCurrent);
 
 router.get("/logout", authenticate, ctrlAuth.logout);
 
+router.patch(
+  "/",
+  validateBody(userJoiSchemas.updateStatusSchema),
+  authenticate,
+  ctrlAuth.updateStatusUser
+);
+
 module.exports = router;

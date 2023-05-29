@@ -1,10 +1,10 @@
-const { User } = require("../../models/users");
+const { User } = require("../../models");
 
 const bcrypt = require("bcrypt");
 
 const jwt = require("jsonwebtoken");
 
-const { HttpError, ctrlWrapper } = require("../helpers");
+const { HttpError, ctrlWrapper } = require("../../helpers");
 
 require("dotenv").config();
 const { SECRET_KEY } = process.env;
@@ -30,7 +30,10 @@ const login = async (req, res) => {
 
   await User.findByIdAndUpdate(user._id, { token });
 
-  res.json({ token, user: user.subscription, email: user.email });
+  res.json({
+    token,
+    user: { subscription: user.subscription, email: user.email },
+  });
 };
 
 module.exports = { login: ctrlWrapper(login) };
